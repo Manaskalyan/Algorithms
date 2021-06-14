@@ -98,9 +98,10 @@ int main(void)
     
     
 	int i, prev, iter;
-	/*Iterate it for 100, 1000 times*/
+	/*Iterate it for NUM_ITERATIONS times*/
 	for (iter = 0; iter < NUM_ITERATIONS; iter++) {
 
+		/*For every iter, generate array values randomly*/
 		for (i = 0; i < ARR_SIZE; i++)
 		{
 			arr[i] = rand();
