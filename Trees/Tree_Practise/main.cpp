@@ -63,6 +63,8 @@ int main() {
 
   mk_tree.insert(mk_tree.root_node, 5);
 
+  
+
   //mk_tree.root_node = &node1;
 
   mk_tree.insert(mk_tree.root_node, 8);
@@ -81,15 +83,18 @@ int main() {
 
   mk_tree.insert(mk_tree.root_node, 3);
 
+  std::cout << "atleast this should print" << std::endl;
+
 
   mk_tree.traverse(mk_tree.root_node);
 
+  mk_tree.search(mk_tree.root_node, NULL, 1, 200);
 
+  mk_tree.delete_node(mk_tree.root_node, 200);
 
+  mk_tree.delete_node(mk_tree.root_node, 10);
 
-
-
-  
+  mk_tree.traverse(mk_tree.root_node);  
 
   return 0;
 }
