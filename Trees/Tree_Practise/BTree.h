@@ -38,18 +38,24 @@ namespace mk{
   //What my brain says is I don't know how to deal with private variables of this object yet
   //So don't worry about this stuff Manas.
 
+  /* See this class has only one data member / root node pointer */
+  /* A lot of functionality to be performed on the object */
   class BST {
 
-    public:
+    private:
+    int delete_leaf(parent_child);           /* You can't call this from client */
+    int delete_one_child_node(parent_child); /* You can't call this from client */
 
+    public:
     Node *root_node; // pointer to root node
 
     int insert(Node * root, int data);
-    parent_child search(Node* root, Node* parent, int left_child, int search_value);
+    parent_child search(Node* root, Node* parent, int left_child, int search_value); /*Can i overload this function ?*/
+    /* User might not want to know the parent / pointer for this node. He might just want to know if a search exists or not */
+    int search(Node* root, int search_value);
     parent_child find_IOP (Node* root);
-    int delete_leaf(parent_child);
-    int delete_one_child_node(parent_child);
-    int traverse (Node * root);
+    int traverse_ascending_order (Node * root);
+    int traverse_descending_order (Node * root);
     int delete_node(Node *root, int value);
 
   };

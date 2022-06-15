@@ -12,9 +12,9 @@ namespace mk
 //Given a tree how many times a function call wiil be made to traverse all nodes?
 //I have kept root as a member of class BST. I have kept it as a variable too here in a member function.
 //There is ambiguity here. How is that gonna be resolved?
-  int BST::traverse (Node* root)
+  int BST::traverse_descending_order (Node* root)
   {
-    //std::cout << "entered traverse" <<std::endl;
+    //std::cout << "entered traverse descending" <<std::endl;
     if (root == nullptr) {
       //std:: cout << "tree empty" << std::endl;
       return 0;
@@ -32,9 +32,33 @@ namespace mk
     //BST::traverse (root->Right_child);
     
     /*The following prints data in ascending order*/
-    BST::traverse (root->Right_child);    
+    BST::traverse_descending_order (root->Right_child);    
     root->print_node();
-    BST::traverse (root->Left_child);
+    BST::traverse_descending_order (root->Left_child);
+
+    return 0;  
+
+  }
+
+   int BST::traverse_ascending_order (Node* root)
+  {
+    //std::cout << "entered traverse ascending" <<std::endl;
+    if (root == nullptr) {
+      //std:: cout << "tree empty" << std::endl;
+      return 0;
+    }
+
+    if (root->is_leaf() == 1) {
+      //std:: cout << "only 1 value" << std::endl;
+      root->print_node();
+      return 0;
+    }
+    
+    /*The following produces data in asscending order*/
+     BST::traverse_ascending_order (root->Left_child);
+     root->print_node();
+     BST::traverse_ascending_order (root->Right_child);
+    
 
     return 0;  
 
@@ -49,6 +73,34 @@ namespace mk
     }
     pc.node = curr;
     return pc;
+  }
+
+    int BST:: search(Node* root, int search_value) {
+     if (root == nullptr) {
+        std:: cout << "tree empty" << std::endl;
+        return 0;     
+     }
+
+     if (root->data == search_value) {
+        std:: cout << "search found" << std::endl;
+        return 0; 
+
+     }
+
+    if (root->is_leaf() == 1) {
+      std:: cout << "search not found" << std::endl;      
+      return 0;
+    }
+
+    if (search_value < root->data){
+      BST:: search(root->Left_child, search_value);   
+    }
+
+    else {
+      BST:: search(root->Right_child, search_value);
+    }
+
+    return 0;
   }
 
   parent_child BST:: search(Node* root, Node* parent, int left_child, int search_value) {
