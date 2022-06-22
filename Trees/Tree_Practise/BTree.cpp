@@ -185,7 +185,7 @@ namespace mk
 
         root->Left_child->data = data;
         root->Left_child->Left_child = nullptr;
-        root->Left_child->Left_child = nullptr;
+        root->Left_child->Right_child = nullptr;
         return 0;
       }
       else {
