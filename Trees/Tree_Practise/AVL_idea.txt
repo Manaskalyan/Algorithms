@@ -1,0 +1,15 @@
+
+
+
+// For every node there should be height of the node.
+// Go slowly MK. Enjoy the process Manas. 
+
+// I did the above MK. Now the height of every node is computed
+
+/* Let's say I insert the first node. root node has height 1.
+ * 
+
+// Can i use inheritence Manas?
+// check for every node "Is the node balanced".
+
+// If a node is out of balance, balance the node or the tree starting with the node i.e out of balance

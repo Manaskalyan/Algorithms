@@ -14,7 +14,7 @@ namespace mk
 //There is ambiguity here. How is that gonna be resolved?
   int BST::traverse_descending_order (Node* root)
   {
-    //std::cout << "entered traverse descending" <<std::endl;
+    std::cout << "entered traverse descending" <<std::endl;
     if (root == nullptr) {
       //std:: cout << "tree empty" << std::endl;
       return 0;
@@ -42,14 +42,14 @@ namespace mk
 
    int BST::traverse_ascending_order (Node* root)
   {
-    //std::cout << "entered traverse ascending" <<std::endl;
+    std::cout << "entered traverse ascending" <<std::endl;
     if (root == nullptr) {
       //std:: cout << "tree empty" << std::endl;
       return 0;
     }
 
     if (root->is_leaf() == 1) {
-      //std:: cout << "only 1 value" << std::endl;
+      std:: cout << "entered leaf" << std::endl;
       root->print_node();
       return 0;
     }
@@ -156,6 +156,7 @@ namespace mk
       root->data = data;
       root->Left_child = nullptr;
       root->Right_child = nullptr;
+      root->height = 1;
 
       root_node = root;
       //std::cout << "inserted value : " << root->data << std::endl;
@@ -185,11 +186,22 @@ namespace mk
 
         root->Left_child->data = data;
         root->Left_child->Left_child = nullptr;
-        root->Left_child->Left_child = nullptr;
+        root->Left_child->Right_child = nullptr;
+        root->Left_child->height = 1;
+        if (root->height <= 1) {
+          root->height = 2;
+        }
         return 0;
       }
       else {
         insert(root->Left_child, data);
+        if (root->Right_child == nullptr) {
+          root->height = root->Left_child->height + 1;
+        }
+        else {
+          root->height = std::max(root->Left_child->height, root->Right_child->height) + 1;
+        }
+        
         return 0;
       }
 
@@ -205,11 +217,25 @@ namespace mk
         root->Right_child->data = data;
         root->Right_child->Left_child = nullptr;
         root->Right_child->Right_child = nullptr;
+        root->Right_child->height = 1;
+
+        if (root->height <= 1) {
+          root->height = 2;
+        }
+
+        /*if root height <= 1, root -> height = 2*/
 
         return 0;        
       }
       else {
         insert(root->Right_child, data);
+        if (root->Left_child == nullptr) {
+          root->height = root->Right_child->height + 1;
+        }
+        else {
+          root->height = std::max(root->Left_child->height, root->Right_child->height) + 1;          
+        }
+        
         return 0;
       }
 
@@ -317,7 +343,8 @@ namespace mk
 
   int Node::print_node()
   {
-    std::cout << this->data << " ";
+    //std::cout << this->data << " ";
+    std::cout << this->data << " " << this->height << std::endl;
     return 0;
   }
 

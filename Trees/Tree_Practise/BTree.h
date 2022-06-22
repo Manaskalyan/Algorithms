@@ -8,6 +8,8 @@
 #pragma once
 
 #include <iostream>
+#include <algorithm>
+using namespace std;
 
 
 namespace mk{
@@ -17,6 +19,9 @@ namespace mk{
     public:
 
     int data;
+
+    int height; // height of the node. Leaf has a height 1.
+                // If tree is empty, height is 0.
 
     // pointers to Left child and right child
     Node * Left_child;  // Not sure if this syntax will work or not.
