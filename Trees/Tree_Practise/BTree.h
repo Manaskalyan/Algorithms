@@ -17,6 +17,7 @@ namespace mk{
     public:
 
     int data;
+    int height;
 
     // pointers to Left child and right child
     Node * Left_child;  // Not sure if this syntax will work or not.
