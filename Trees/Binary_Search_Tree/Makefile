@@ -1,5 +1,5 @@
 EXE = main
-OBJS = main.o BTree.o
+OBJS = main.o BST.o
 CLEAN_RM =
 
 
