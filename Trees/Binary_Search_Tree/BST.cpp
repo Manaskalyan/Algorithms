@@ -1,7 +1,7 @@
 /**
  * @file BST.cpp
  * @author Manas Kalyan (manaskalyan98@gmail.com)
- * @brief  Implements Binary Search Tree Functionality
+ * @brief  Implements integer Binary Search Tree Functionality
  * @version 0.1
  * @date 2022-10-15
  * 
@@ -16,7 +16,7 @@ namespace mk
 //Given a tree how many times a function call will be made to traverse all nodes?
 //I have kept root as a member of class BST. I have kept it as a variable too here in a member function.
 //There is ambiguity here. How is that gonna be resolved?
-  int BST::_traverse_descending_order(Node* root)
+  int32_t BST::_traverse_descending_order(Node* root) const
   {
     //std::cout << "entered traverse descending" <<std::endl;
     if (root == nullptr) {
@@ -44,7 +44,7 @@ namespace mk
 
   }
 
-  int BST::_traverse_ascending_order(Node* root)
+  int32_t BST::_traverse_ascending_order(Node* root) const
   {
     if (root == nullptr) {
       //std:: cout << "tree empty" << std::endl;
@@ -65,7 +65,7 @@ namespace mk
     return 0;
   }
 
-  parent_child BST:: find_IOP (Node* root) {
+  parent_child BST:: _find_IOP (Node* root) {
     parent_child pc;
     Node* curr = root->Left_child;
     while (curr->Right_child != nullptr) {
@@ -76,7 +76,7 @@ namespace mk
     return pc;
   }
 
-  bool BST:: _search(Node* root, int search_value) {
+  bool BST:: _search(Node* root, int search_value) const{
     bool err;
 
     if (root == nullptr) {
@@ -85,7 +85,7 @@ namespace mk
     }
 
     if (root->data == search_value) {
-      std:: cout << "search found" << std::endl;
+      //std:: cout << "search found" << std::endl;
       return true; 
 
     }
@@ -110,7 +110,7 @@ namespace mk
 
   }
 
-  parent_child BST:: search(Node* root, Node* parent, int left_child, int search_value) {
+  parent_child BST:: _search(Node* root, Node* parent, int left_child, int search_value) const{
 
      parent_child pc;
      parent_child *pc_ptr = &pc;
@@ -125,7 +125,7 @@ namespace mk
      }
 
      if (root->data == search_value) {
-        std:: cout << "search found" << std::endl;
+        //std:: cout << "search found" << std::endl;
         pc_ptr->parent = parent;
         pc_ptr->node = root;
         pc_ptr->left_child = left_child;
@@ -143,11 +143,11 @@ namespace mk
     }
 
     if (search_value < root->data){
-      pc = BST:: search(root->Left_child, root, 1, search_value);
+      pc = BST:: _search(root->Left_child, root, 1, search_value);
     }
 
     else {
-      pc = BST:: search(root->Right_child, root, 0,  search_value);
+      pc = BST:: _search(root->Right_child, root, 0,  search_value);
     }
 
     return pc;
@@ -159,9 +159,9 @@ namespace mk
     if (root == nullptr){
 
       //root = (Node*)malloc(sizeof(Node));
-      root = new(Node(data));
+      root = _create_node_on_heap(data);
 
-      root_node = root;
+      root_node_ = root;
       return 0;
     }
 
@@ -170,8 +170,9 @@ namespace mk
       /* If root doesn't have right child */
       if (!root->has_left_child()) {
 
-        root->Left_child = new(Node(data));   /*I think I can clean this up with a constructor */
-                                              /* Will a constructor be invoked when created on heap? */
+        root->Left_child = _create_node_on_heap(data);    /*I think I can clean this up with a constructor */
+                                                          /* Will a constructor be invoked when created on heap? */
+        //std::cout << "Data : " << data <<" "<< root->Left_child->data << std::endl;
         return 0;
       }
       else {
@@ -184,9 +185,9 @@ namespace mk
     else {
 
       /* If root doesn't have right child */
-      if (!root->has_right_child) {
+      if (!root->has_right_child()) {
 
-        root->Right_child = new(Node(data));
+        root->Right_child = _create_node_on_heap(data);
         return 0;        
       }
       else {
@@ -198,7 +199,7 @@ namespace mk
 
   }
 
-  int BST::delete_leaf(parent_child pc) {
+  int32_t BST::_delete_leaf(parent_child pc) {
 
     delete(pc.node);
 
@@ -211,7 +212,7 @@ namespace mk
 
   }
 
-  int BST::delete_one_child_node (parent_child pc) {
+  int32_t BST::_delete_one_child_node (parent_child pc) {
 
     if (pc.node->Left_child != nullptr) {
       if (pc.left_child == 1) {
@@ -239,12 +240,12 @@ namespace mk
   
   }
 
-  int BST::delete_node(Node *root, int value)
+  int32_t BST::_delete_node(Node *root, int value)
   {
     parent_child pc, iop;
     parent_child *pc_ptr = &pc;
 
-    pc = search(root, nullptr, 1, value);
+    pc = _search(root, nullptr, 1, value);
 
     /*only now you need to do anything*/
     if (pc_ptr->node != nullptr) {
@@ -252,19 +253,19 @@ namespace mk
       /* If the node to delete is a leaf */
       /* Delete the node and nullptr the pointer of parent based on if it's left child or right child */
       if (pc.node->is_leaf() == 1) {
-        delete_leaf(pc);          
+        _delete_leaf(pc);          
       }
 
       /* If the node to delete has one child */
       else if (pc.node->has_one_child() == 1) {
-        delete_one_child_node(pc);     
+        _delete_one_child_node(pc);     
 
       }
 
       /*it has both child*/
       /* Find the IOP. swap it with IOP and delete the swapped IOP */
       else {
-          iop = find_IOP(pc.node);
+          iop = _find_IOP(pc.node);
 
           int tmp;
           tmp = iop.node->data;
@@ -272,11 +273,11 @@ namespace mk
           pc.node->data  = tmp;
 
           if (pc.node->is_leaf() == 1) {
-            delete_leaf(pc);              
+            _delete_leaf(pc);              
           }
           
           else  {
-            delete_one_child_node(pc);
+            _delete_one_child_node(pc);
           }
       }
 
@@ -341,21 +342,38 @@ namespace mk
     Right_child = nullptr;
   }
 
+  Node::Node()
+  {
+
+  }
+
+  Node* BST:: _create_node_on_heap(int data){
+
+    Node* ptr = new Node();
+
+    ptr->data = data;
+    ptr->Left_child = nullptr;
+    ptr->Right_child = nullptr;
+
+    return ptr;
+  }
+
+
 
 
   
 }
 
-namesace mk{
+namespace mk{
 
 
-  bool BST::search(int search_value)
+  bool BST::search(int search_value) const
     { 
 
-      /* If you see that root_node is not declated in this function member */
+      /* If you see that root_node_ is not declated in this function member */
       /* Becaue it is class data member, it is available to it */
       /* However is it a good style? */
-      return ( BST::_search(root_node, search_value) );
+      return ( BST::_search(root_node_, search_value) );
 
     }
   
@@ -363,25 +381,25 @@ namesace mk{
   {
     int32_t err;
 
-    err = BST::_insert(root_node, data);
+    err = BST::_insert(root_node_, data);
     
     return err;
   }
 
-  int32_t BST::traverse_ascending_order()
+  int32_t BST::traverse_ascending_order() const
   {
     int32_t err;
 
-    err = BST::_traverse_ascending_order(root_node);
+    err = BST::_traverse_ascending_order(root_node_);
 
     return err;
   }
 
-  int32_t BST::traverse_descending_order()
+  int32_t BST::traverse_descending_order() const
   {
     int32_t err;
 
-    err = BST::_traverse_descending_order(root_node);
+    err = BST::_traverse_descending_order(root_node_);
 
     return err;
   }
@@ -390,10 +408,15 @@ namesace mk{
   {
     int32_t err;
 
-    err = BST::_delete_node(root_node, data);
+    err = BST::_delete_node(root_node_, data);
 
     return err;
 
+  }
+
+  BST::BST()
+  {
+    root_node_ = nullptr;
   }
 
 

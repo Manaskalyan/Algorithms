@@ -1,8 +1,12 @@
 /**
- * BTree class outline.
+ * @file BST.h
+ * @author Manas <manaskalyan98@gmail.com>
+ * @brief Interface for the Integer Binary Search Tree
+ * @version 0.1
+ * @date 2022-10-24
  * 
- * @author
- *   Manas <manaskalyan98@gmail.com>
+ * @copyright Copyright (c) 2022
+ * 
  */
 
 #define SUCCESS 0
@@ -95,22 +99,27 @@ namespace mk{
 
   /* See this class has only one data member / root node pointer */
   /* A lot of functionality to be performed on the object */
+  /**
+   * @brief Binary Search Tree Class Interface
+   * 
+   */
   class BST {
 
     private:
-      int delete_leaf(parent_child);           /* You can't call this from client */
-      int delete_one_child_node(parent_child); /* You can't call this from client */
+      int32_t _delete_leaf(parent_child);           /* You can't call this from client */
+      int32_t _delete_one_child_node(parent_child); /* You can't call this from client */
 
-      Node *root_node; // pointer to root node
+      Node *root_node_; // pointer to root node
 
       int32_t _insert(Node * root, int data);
-      parent_child search(Node* root, Node* parent, int left_child, int search_value); /*Can i overload this function ?*/
+      parent_child _search(Node* root, Node* parent, int left_child, int search_value) const; /*Can i overload this function ?*/
       /* User might not want to know the parent / pointer for this node. He might just want to know if a search exists or not */
-      bool _search(Node* root, int search_value); //Change this implementation to bool MK.
-      parent_child find_IOP (Node* root);
-      int _traverse_ascending_order(Node * root);
-      int _traverse_descending_order(Node * root);
-      int _delete_node(Node *root, int value);
+      bool _search(Node* root, int search_value) const; //Change this implementation to bool MK.
+      parent_child _find_IOP (Node* root);
+      int32_t _traverse_ascending_order(Node * root) const;
+      int32_t _traverse_descending_order(Node * root) const;
+      int32_t _delete_node(Node *root, int value);
+      Node* _create_node_on_heap(int data);
 
     public:
 
@@ -158,7 +167,12 @@ namespace mk{
        */
       int32_t delete_data_node(int data);
 
-      //TODO: Think of copy constructor and assignment operator Manas..
+      //TODO: Think of copy constructor and assignment operator Manas.
+      //TODO: Think of destructor too MK.
+
+      //TODO: Look if you can bring level order traversal as well here.
+      //TODO: Look how to do traverse_ascending_order non-recursively..
+      //TODO: Catch framework?? 
 
       BST(); //Custom default constructor
 

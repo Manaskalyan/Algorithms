@@ -1,105 +1,60 @@
 /**
- * An empty BinaryTree.
+ * @file main.cpp
+ * @author Manas <manaskalyan98@gmail.com>
+ * @brief 
+ * @version 0.1
+ * @date 2022-10-24
  * 
- * @author
- *   Wade Fagen-Ulmschneider <waf@illinois.edu>
+ * @copyright Copyright (c) 2022
+ * 
  */
 
-#include "BTree.h"
+#include "BST.h"
 
 int main() {
 
+  bool search;
+
   mk::BST mk_tree;
 
-//  mk::Node node1, node2, node3, node4, node5, node6, node7, node8, node9;
-
-
-  mk_tree.root_node = nullptr;
-
-  /*
-  node1.data = 5;
-  node1.Left_child = NULL;
-  node1.Right_child = NULL;
-
-//  mk_tree.root_node = &node1;
-
-
-  node2.data = 8;
-  node2.Left_child = NULL;
-  node2.Right_child = NULL;
-
-  node3.data = 1;
-  node3.Left_child = NULL;
-  node3.Right_child = NULL;
-
-  node4.data = 6;
-  node4.Left_child = NULL;
-  node4.Right_child = NULL;
-
-  node5.data = 2;
-  node5.Left_child = NULL;
-  node5.Right_child = NULL;
-
-  node6.data = 20;
-  node6.Left_child = NULL;
-  node6.Right_child = NULL;
-
-  node7.data = 200;
-  node7.Left_child = NULL;
-  node7.Right_child = NULL;
-
-  node8.data = 10;
-  node8.Left_child = NULL;
-  node8.Right_child = NULL;
-
-  node9.data = 3;
-  node9.Left_child = NULL;
-  node9.Right_child = NULL;
-
-  */
-
-
-  mk_tree.root_node = nullptr;
-
-  mk_tree.insert(mk_tree.root_node, 5);
-
-  mk_tree.insert(mk_tree.root_node, 8);
-
-  mk_tree.insert(mk_tree.root_node, 1);
-
-  mk_tree.insert(mk_tree.root_node, 6);
-
-  mk_tree.insert(mk_tree.root_node, 2);
-
-  mk_tree.insert(mk_tree.root_node, 20);
-
-  mk_tree.insert(mk_tree.root_node, 200);
-
-  mk_tree.insert(mk_tree.root_node, 10);
-
-  mk_tree.insert(mk_tree.root_node, 3);
+  mk_tree.insert(5);
+  mk_tree.insert(8);
+  mk_tree.insert(1);
+  mk_tree.insert(6);
+  mk_tree.insert(2);
+  mk_tree.insert(20);
+  mk_tree.insert(200);
+  mk_tree.insert(10);
+  mk_tree.insert(3);
 
   std::cout << "printing in ascending order : " << std::endl;
-  mk_tree.traverse_ascending_order(mk_tree.root_node);
+  mk_tree.traverse_ascending_order();
   std::cout << " " << std::endl;
   std::cout << "printing in descending order : " << std::endl;
-  mk_tree.traverse_descending_order(mk_tree.root_node);
+  mk_tree.traverse_descending_order();
   std::cout << " " << std::endl;
 
-  mk_tree.search(mk_tree.root_node, nullptr, 1, 200);
+  search = mk_tree.search(200);
+  std::cout << "Searched for 200 and "<<((search==true) ? "found in tree" : "not found in tree") << std::endl; 
 
-  mk_tree.search(mk_tree.root_node, 20); //Overloaded func
+  search = mk_tree.search(20);
+  std::cout << "Searched for 20 and "<<((search==true) ? "found in tree" : "not found in tree") << std::endl;
 
-  mk_tree.delete_node(mk_tree.root_node, 200);
+  search = mk_tree.search(101);
+  std::cout << "Searched for 101 and "<<((search==true) ? "found in tree" : "not found in tree") << std::endl; 
 
-  mk_tree.delete_node(mk_tree.root_node, 10);
+
+
+
+  mk_tree.delete_data_node(200);
+  mk_tree.delete_data_node(10);
 
   std::cout << "printing in ascending order : " << std::endl;
-  mk_tree.traverse_ascending_order(mk_tree.root_node);
+  mk_tree.traverse_ascending_order();
   std::cout << " " << std::endl;
 
   std::cout << "printing in descending order : " << std::endl;
-  mk_tree.traverse_descending_order(mk_tree.root_node);
+  mk_tree.traverse_descending_order();
   std::cout << " " << std::endl;
 
   return 0;
