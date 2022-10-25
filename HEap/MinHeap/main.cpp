@@ -1,5 +1,5 @@
 #include <iostream>
-#include "heap.h"
+#include "minheap.h"
 
 using namespace mk;
 
